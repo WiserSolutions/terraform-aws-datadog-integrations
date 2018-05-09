@@ -1,9 +1,11 @@
 variable "service_key" {
   description = "PagerDuty service integration key"
 }
+
 variable "service_name" {
   description = "PagerDuty service name as used in Datadog"
 }
+
 variable "s3_base" {
   description = "Base path in S3 bucket for PagerDuty configuration pieces"
   default     = "datadog/integration/pagerduty"

@@ -94,8 +94,9 @@ resource "aws_lambda_function" "this" {
 
   tags {
     "Description" = "${var.lambda_desc}"
+
     #"Stack" =
-    "Terraform"   = "true"
+    "Terraform" = "true"
   }
 }
 

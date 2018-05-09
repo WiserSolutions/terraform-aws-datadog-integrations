@@ -2,14 +2,17 @@ variable "environment" {
   description = "Deploy environment"
   default     = ""
 }
+
 variable "lambda_desc" {
   description = "Description of lambda"
 }
+
 variable "lambda_env_vars" {
   description = "Environment variable to provide to lambda"
   type        = "map"
   default     = {}
 }
+
 variable "lambda_handler" {
   description = "Lambda handler"
 }
@@ -38,3 +41,4 @@ variable "source_dir" {
     }
   }
 /**/
+

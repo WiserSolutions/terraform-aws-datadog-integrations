@@ -1,6 +1,7 @@
 variable "channel_name" {
   description = "Slack channel name"
 }
+
 variable "s3_base" {
   description = "Base path in S3 bucket for Slack configuration pieces"
   default     = "datadog/integration/slack"
