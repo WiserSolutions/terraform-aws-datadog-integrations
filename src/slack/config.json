@@ -1,0 +1,13 @@
+{
+  "aws_region": "us-west-2",
+  "datadog_api_key": "",
+  "datadog_app_key": "",
+  "environment": "",
+  "log_level": "DEBUG",
+  "s3_bucket_parts": "wiser-one-ci",
+  "secret_name": "slack_webhook_datadog",
+  "secret_endpoint_url": "https://secretsmanager.us-west-2.amazonaws.com",
+  "slack_token": "",
+  "path_parts": "datadog/integration/slack",
+  "parts_pattern": "channel-*.json"
+}

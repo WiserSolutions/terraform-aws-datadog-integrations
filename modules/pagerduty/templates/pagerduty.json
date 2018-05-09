@@ -1,0 +1,4 @@
+{
+  "service_key": "${service_key}",
+  "service_name": "${service_name}"
+}

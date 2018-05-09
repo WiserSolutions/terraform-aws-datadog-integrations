@@ -1,0 +1,5 @@
+*.pyc
+*.tfstate
+*.tfstate.backup
+*.zip
+.terraform

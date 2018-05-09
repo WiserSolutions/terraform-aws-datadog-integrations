@@ -1,0 +1,12 @@
+{
+  "aws_region": "us-west-2",
+  "datadog_api_key": "",
+  "datadog_app_key": "",
+  "environment": "",
+  "log_level": "DEBUG",
+  "pagerduty_ro_key": "",
+  "pagerduty_subdomain": "",
+  "parts_pattern": "service-*.json",
+  "path_parts": "datadog/integration/pagerduty",
+  "s3_bucket_parts": ""
+}
