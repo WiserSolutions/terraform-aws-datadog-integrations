@@ -2,6 +2,7 @@ data "template_file" "pagerduty_service" {
   template = "${file("${path.module}/templates/pagerduty.json")}"
 
   vars {
+    default      = "${var.datadog_default}"
     service_key  = "${var.service_key}"
     service_name = "${var.service_name}"
   }

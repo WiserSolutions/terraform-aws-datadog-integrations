@@ -34,23 +34,23 @@ resource "aws_s3_bucket" "monitoring" {
 
 module "lambda_pagerduty" {
   source          = "./modules/lambda"
-  environment     = "one"
+  environment     = "${var.environment}"
   lambda_desc     = "Datadog Pagerduty Integration"
   lambda_env_vars = "${var.lambda_pagerduty_env_vars}"
   lambda_handler  = "datadog-pagerduty-integration.lambda_handler"
   lambda_name     = "datadog_pagerduty"
-  s3_bucket       = "wiser-one-ci"
+  s3_bucket       = "${var.s3_bucket}"
   source_dir      = "pagerduty"
 }
 
 module "lambda_slack" {
   source          = "./modules/lambda"
-  environment     = "one"
+  environment     = "${var.environment}"
   lambda_desc     = "Datadog Slack Integration"
   lambda_env_vars = "${var.lambda_slack_env_vars}"
   lambda_handler  = "datadog-slack-integration.lambda_handler"
   lambda_name     = "datadog_slack"
-  s3_bucket       = "wiser-one-ci"
+  s3_bucket       = "${var.s3_bucket}"
   source_dir      = "slack"
 }
 

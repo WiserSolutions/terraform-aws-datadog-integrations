@@ -6,11 +6,16 @@ import lambda_lib
 import logging
 import os
 import requests
-#import slack
+# Create library: import slack
 from botocore.exceptions import ClientError
 
 # TODO:
 #   ensure channel exist and are setup in Slack
+#   Read lambda event
+#       Object key/path:
+#           ["Records"][]["s3"]["object"]["key"]
+#       Event ObjectCreated:Put
+#           ["Records"][]["eventName"]
 
 # No handler for root when run locally
 logger = logging.getLogger()
@@ -19,28 +24,12 @@ states = {}
 
 def get_slack_channels(s3_bucket, prefix, pattern):
     # Return: list of channel names
-    channels = []
-    s3 = boto3.client('s3')
-    list = s3.list_objects_v2(Bucket=s3_bucket, Prefix=prefix)
-    #print(list)
-    for obj in list["Contents"]:
-        # Pattern match on text after prefix. UNIX globbing - Could use regex
-        if fnmatch.fnmatch(obj["Key"], prefix + "/" + pattern):
-            print("Reading object: {}".format(obj["Key"]))
-            try:
-                # TODO: support channel and service_hook
-                channel_result = s3.get_object(Bucket=s3_bucket, Key=obj["Key"])
-                logger.debug("S3 get config: {}".format(channel_result))
-                channel_raw = channel_result["Body"].read()
-                channel = json.loads(channel_raw)
-                if not "transfer_all_user_comments" in channel:
-                    channel["transfer_all_user_comments"] = "false"
-                if not "account" in channel:
-                    channel["account"] = "Main_Account"
-                channels.append(channel)
-            except ClientError as e:
-                logger.warn("Config not found in S3: {}".format(e))
-                logger.warn("Copying default config to S3")
+    channels = lambda_lib.get_integration_parts(s3_bucket, prefix, pattern)
+    for channel in channels:
+        if not "transfer_all_user_comments" in channel:
+            channel["transfer_all_user_comments"] = "false"
+        if not "account" in channel:
+            channel["account"] = "Main_Account"
     return channels
 
 ###
@@ -103,7 +92,7 @@ def add_channel_user(channel_id, user_id):
 
 def set_channel_purpose(channel_id, purpose):
     print("\tAdd purpose...")
-    #purpose = "Alerts/Notifications for " + repo + " in " + env
+    # Define purpose = "Alerts/Notifications for " + repo + " in " + env
     global arg_token
     global url_base
     p = urllib.quote_plus(purpose)
@@ -132,7 +121,7 @@ def channel_join(name):
     # Will create channel if it does not exist
     global arg_token
     global url_base
-    channel_id = ""
+    # Define channel_id = ""
     url = url_base + "channels.join?" + arg_token + "&name=" + name + "&pretty=1"
     print("\turl: {}".format(url))
     result = requests.post(url)
@@ -141,7 +130,7 @@ def channel_join(name):
     data = result.json()
     #print(data)
     if "ok" in data:
-        #channel_id = data["channel"]["id"]
+        # Get channel id: channel_id = data["channel"]["id"]
         return data["channel"]
 
 def channel_leave(id):
@@ -199,7 +188,7 @@ def update_slack_channels(channels):
     arg_token = "token=" + config["slack_token"]
     url_base = "https://slack.com/api/"
 
-    channels_exist = get_channels()
+    # Get channels_exist = get_channels()
     print("# Channels: {}".format(len(channels)))
     print("# Users: {}".format(len(users)))
     print("Pagerduty ID: {}".format(pagerduty_id))
@@ -236,10 +225,10 @@ def lambda_handler(event, context):
     logger.setLevel(log_level)
     # TODO: read event, if DeletedObject archive/remove Slack channel
     logger.debug("Event: {}".format(json.dumps(event, indent=2)))
-    logger.debug("Context: {}".format(json.dumps(context, indent=2)))
+    logger.debug("Context: {}".format(context))
     channels = get_slack_channels(config["s3_bucket_parts"], config["path_parts"], config["parts_pattern"])
     # Secrets: DD api, DD app, slack webhook
-    datadog_keys = json.loads(lambda_lib.get_secret(config["secrets"]["datadog_api"], config["secret_endpoint_url"], config["aws_region"]))
+    datadog_keys = lambda_lib.get_secret(config["secrets"]["datadog_api"], config["secret_endpoint_url"], config["aws_region"])
     slack_webhook = lambda_lib.get_secret(config["secrets"]["slack_webhook"], config["secret_endpoint_url"], config["aws_region"])
     slack_hooks = get_slack_hooks(slack_webhook)
     #update_slack_channels(channels)
