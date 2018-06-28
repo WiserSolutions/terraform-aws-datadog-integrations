@@ -1,7 +1,6 @@
-
 variable "datadog_default" {
   description = "Default Pagerduty service for Datadog (@pagerduty)"
-  default = false
+  default     = false
 }
 
 variable "service_key" {

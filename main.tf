@@ -40,7 +40,7 @@ module "lambda_pagerduty" {
   lambda_handler  = "datadog-pagerduty-integration.lambda_handler"
   lambda_name     = "datadog_pagerduty"
   s3_bucket       = "${var.s3_bucket}"
-  source_dir      = "pagerduty"
+  source_dir      = "${path.module}/src/pagerduty"
 }
 
 module "lambda_slack" {
@@ -51,7 +51,7 @@ module "lambda_slack" {
   lambda_handler  = "datadog-slack-integration.lambda_handler"
   lambda_name     = "datadog_slack"
   s3_bucket       = "${var.s3_bucket}"
-  source_dir      = "slack"
+  source_dir      = "${path.module}/src/slack"
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
