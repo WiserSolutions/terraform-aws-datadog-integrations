@@ -10,6 +10,7 @@ data "template_file" "pagerduty_service" {
 
 resource "aws_s3_bucket_object" "object" {
   bucket = "${var.s3_bucket}"
+  acl    = "bucket-owner-full-control"
 
   #key    = "datadog/integration type/service"
   key     = "${var.s3_base}/service-${var.service_name}.json"

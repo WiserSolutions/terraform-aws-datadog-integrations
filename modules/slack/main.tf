@@ -8,6 +8,7 @@ data "template_file" "slack_channel" {
 
 resource "aws_s3_bucket_object" "object" {
   bucket = "${var.s3_bucket}"
+  acl    = "bucket-owner-full-control"
 
   #key    = "datadog/integration type/service"
   key     = "${var.s3_base}/channel-${var.channel_name}.json"
