@@ -57,7 +57,7 @@ version: 2
                 # if not ^"../
                 echo "${module} = true"
               done
-              echo "}}"
+              echo -e "}\n}\n"
               } > .tflint.hcl
               fi
             echo "tflint configuration:"
