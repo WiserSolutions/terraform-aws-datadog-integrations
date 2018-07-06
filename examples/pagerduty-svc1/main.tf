@@ -3,4 +3,5 @@ module "service" {
   service_key  = "1234567890"
   service_name = "testing_tf"
   s3_bucket    = "wiser-infra-automation"
+  datadog_default = "false"
 }
