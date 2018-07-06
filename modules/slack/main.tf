@@ -15,6 +15,6 @@ resource "aws_s3_bucket_object" "object" {
   content = "${data.template_file.slack_channel.rendered}"
 
   # Should be encrypted
-  server_side_encryption = "aws:kms"
+  server_side_encryption = "AES256"
   tags                   = "${var.tags}"
 }
