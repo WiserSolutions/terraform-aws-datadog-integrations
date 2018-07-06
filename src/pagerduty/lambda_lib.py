@@ -138,7 +138,8 @@ def get_integration_parts(s3_bucket, prefix, pattern):
                             parts.insert(0, part)
                         else:
                             parts.append(part)
-                    except ValueError:
+                    # except ValueError: AttributeError
+                    except:
                         parts.append(part)
                 else:
                     parts.append(part)
