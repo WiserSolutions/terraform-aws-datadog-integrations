@@ -3,6 +3,7 @@
 #
 from __future__ import print_function
 import boto3
+import distutils.util
 import fnmatch
 import json
 import logging
@@ -131,9 +132,13 @@ def get_integration_parts(s3_bucket, prefix, pattern):
                 if 'default' in part:
                     default = part['default']
                     part.pop('default', None)
-                    if default:
-                        parts.insert(0, part)
-                    else:
+                    logger.debug("Default value: '{}'".format(default))
+                    try:
+                        if distutils.util.strtobool(default):
+                            parts.insert(0, part)
+                        else:
+                            parts.append(part)
+                    except ValueError:
                         parts.append(part)
                 else:
                     parts.append(part)
