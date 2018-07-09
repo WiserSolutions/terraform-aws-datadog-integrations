@@ -133,18 +133,11 @@ def get_integration_parts(s3_bucket, prefix, pattern):
                     default = part['default']
                     part.pop('default', None)
                     logger.debug("Default value: '{}'".format(default))
-                    # if default: # All True
-                    # strtobool: All false or fail
-                    try:
-                        if distutils.util.strtobool(default):
-                            logger.debug("Default service")
-                            parts.insert(0, part)
-                        else:
-                            logger.debug("NOT Default service: false value")
-                            parts.append(part)
-                    # except ValueError: AttributeError
-                    except:
-                        logger.debug("NOT Default service: strtobool exception")
+                    if default:
+                        logger.debug("Default service: true value")
+                        parts.insert(0, part)
+                    else:
+                        logger.debug("NOT Default service: false value")
                         parts.append(part)
                 else:
                     logger.debug("NOT Default service: No default key")
