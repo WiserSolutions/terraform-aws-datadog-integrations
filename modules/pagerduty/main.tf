@@ -1,4 +1,9 @@
+locals {
+  enabled = "${length(var.service_key) > 0 ? 1 : 0}"
+}
+
 data "template_file" "pagerduty_service" {
+  count    = "${local.enabled}"
   template = "${file("${path.module}/templates/pagerduty.json")}"
 
   vars {
@@ -9,6 +14,7 @@ data "template_file" "pagerduty_service" {
 }
 
 resource "aws_s3_bucket_object" "object" {
+  count  = "${local.enabled}"
   bucket = "${var.s3_bucket}"
   acl    = "bucket-owner-full-control"
 

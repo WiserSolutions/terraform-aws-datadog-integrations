@@ -1,5 +1,6 @@
 variable "channel_name" {
   description = "Slack channel name"
+  default     = ""
 }
 
 variable "s3_base" {

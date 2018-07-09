@@ -1,6 +1,6 @@
 module "service" {
   source       = "../../modules/pagerduty"
-  service_key  = "123456789012"
-  service_name = "test-srv-2"
+  service_key  = ""
+  service_name = "testing_disable_tf"
   s3_bucket    = "wiser-infra-automation"
 }

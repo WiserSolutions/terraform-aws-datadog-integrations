@@ -5,6 +5,7 @@ variable "datadog_default" {
 
 variable "service_key" {
   description = "PagerDuty service integration key"
+  default     = ""
 }
 
 variable "service_name" {
