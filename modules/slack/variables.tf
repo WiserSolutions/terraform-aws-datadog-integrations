@@ -3,6 +3,11 @@ variable "channel_name" {
   default     = ""
 }
 
+variable "enabled" {
+  description = "Set to false to prevent the module from creating anything"
+  default     = true
+}
+
 variable "s3_base" {
   description = "Base path in S3 bucket for Slack configuration pieces"
   default     = "datadog/integration/slack"
