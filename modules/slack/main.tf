@@ -3,8 +3,14 @@
 #   Channel name is empty
 #   Channel name has format mon-<env>-<service short name> but nothing after second -
 
+module "enabled" {
+  source  = "devops-workflow/boolean/local"
+  version = "0.1.2"
+  value   = "${var.enabled}"
+}
+
 locals {
-  enabled = "${length(replace(var.channel_name, "/(mon-\\w+-)(.*)$/", "$2")) > 0 ? 1 : 0}"
+  enabled = "${module.enabled.value && length(replace(var.channel_name, "/(mon-\\w+-)(.*)$/", "$2")) > 0 ? 1 : 0}"
 }
 
 data "template_file" "slack_channel" {

@@ -3,6 +3,11 @@ variable "datadog_default" {
   default     = ""
 }
 
+variable "enabled" {
+  description = "Set to false to prevent the module from creating anything"
+  default     = true
+}
+
 variable "service_key" {
   description = "PagerDuty service integration key"
   default     = ""

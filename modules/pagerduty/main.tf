@@ -1,5 +1,11 @@
+module "enabled" {
+  source  = "devops-workflow/boolean/local"
+  version = "0.1.2"
+  value   = "${var.enabled}"
+}
+
 locals {
-  enabled = "${length(var.service_key) > 0 ? 1 : 0}"
+  enabled = "${module.enabled.value && length(var.service_key) > 0 ? 1 : 0}"
 }
 
 data "template_file" "pagerduty_service" {
